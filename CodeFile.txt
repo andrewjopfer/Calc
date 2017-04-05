@@ -1,0 +1,336 @@
+/* Andrew James Opfer
+ * Calculator GUI
+ * Prototype I
+    This program is meant simply to test my knowledge of GUI and
+    create an example for my style of programming.  It is known
+    that this calculator has no real practical use due to its
+    simplicity.  Additionally, I could not find a practical way of
+    completing the delete button without drastically increasing the
+    size of the program either with multiple arrays or an external
+    class.  For the sake of keeping this program short and as readable
+    as possible, I have ultimately scrapped the delete button but left
+    the progress I have made available to read.
+ */
+
+package calculator;
+
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
+import java.math.RoundingMode;
+
+public class Calculator extends JFrame{
+    
+    private JButton addition, subtraction, equals, delete, clear;
+    private JButton one, two, three, four, five, six, seven, eight, nine, zero;
+    private JPanel buttonPanel1, buttonPanel2, text;
+    public JTextField output;
+    public long input = 0, numbers = 0;
+    public String cont = "";
+    public boolean function = false, plus = false, minus = false, 
+            solved = false, test = false, finished = false;
+    
+    public Calculator() {
+        
+        setLayout(new BorderLayout());
+        
+        //Prepare Arithmetic Buttons
+        addition = new JButton("+");    addition.setToolTipText("Add");
+        subtraction = new JButton("-"); subtraction.setToolTipText("Subtract");
+        equals = new JButton("=");      equals.setToolTipText("Solve");
+        delete = new JButton("DEL");    delete.setToolTipText("Delete");
+        clear = new JButton("C");       clear.setToolTipText("Clear");
+        clear.setBackground(Color.RED);
+        
+        //Display
+        buttonPanel1 = new JPanel();
+        buttonPanel1.setLayout(new GridLayout(5,1));
+        add(buttonPanel1, BorderLayout.EAST);
+        buttonPanel1.add(clear);    buttonPanel1.add(delete);
+        buttonPanel1.add(addition); buttonPanel1.add(subtraction);
+        buttonPanel1.add(equals);
+        
+        //Prepare Numbers
+        one = new JButton("1");   two = new JButton("2");
+        three = new JButton("3"); four = new JButton("4");
+        five = new JButton("5");  six = new JButton("6");
+        seven = new JButton("7"); eight = new JButton("8");
+        nine = new JButton("9");  zero = new JButton("0");
+        
+        //Display Numbers
+        buttonPanel2 = new JPanel();
+        add(buttonPanel2, BorderLayout.CENTER);
+        buttonPanel2.add(one);   buttonPanel2.add(two);
+        buttonPanel2.add(three); buttonPanel2.add(four);
+        buttonPanel2.add(five);  buttonPanel2.add(six);
+        buttonPanel2.add(seven); buttonPanel2.add(eight);
+        buttonPanel2.add(nine);  buttonPanel2.add(zero);
+        
+        //Create Functions
+        zero.addActionListener(new number0());  one.addActionListener(new number1());
+        two.addActionListener(new number2());   three.addActionListener(new number3());
+        four.addActionListener(new number4());  five.addActionListener(new number5());
+        six.addActionListener(new number6());   seven.addActionListener(new number7());
+        eight.addActionListener(new number8()); nine.addActionListener(new number9());
+        
+        addition.addActionListener(new addBut());  subtraction.addActionListener(new subBut());
+        equals.addActionListener(new equalsBut()); delete.addActionListener(new delBut());
+        clear.addActionListener(new clearBut());
+        
+        
+        //Output
+        output = new JTextField(20);
+        output.setHorizontalAlignment(JTextField.RIGHT);
+        output.setText("" + input); output.setEditable(false);
+        output.setBackground(Color.WHITE);
+        text = new JPanel();
+        add(text, BorderLayout.NORTH); text.add(output);
+        
+        //Finalize GUI
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setTitle("Calculator"); setVisible(true);
+        setSize(240,200);       setResizable(false);
+        
+    }
+    //Run GUI
+    public static void main(String[] args){
+        Calculator Calculator = new Calculator();
+    }
+    
+    /*Number Buttons
+      Each number tests for whether it is the first button pressed or not.
+      The multiplication process is for cosmetics and gather the correct value
+      the user wishes to input -- it appears like any other calculator.
+      It then displays the number the user has input and completes its process.
+    */
+    private class number0 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10); solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false;
+        }
+    }
+    private class number1 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+1; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number2 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+2; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number3 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+3; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number4 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+4; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number5 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+5; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number6 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+6; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number7 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+7; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number8 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+8; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    private class number9 implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            if(input == 0) output.setText("");
+            if(function == true) input = 0; function = false;
+            if(solved == true){input = 0; cont = "";}
+            input = (input*10)+9; solved = false;
+            output.setText(cont + input);
+            
+            //Booleans that help decide order of buttons pressed
+            test = false; finished = false; 
+        }
+    }
+    
+    /*Function Buttons
+      Each function tests for previous addition or subtraction.  If the user
+      has previously clicked the add or subtract button, it will complete that 
+      process immediately rather than using an array to hold each number.  This
+      should save space, though it uses more if statements than using an array
+      or multiple variables.
+    */
+    private class addBut implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            //Testing for previous add/minus
+            if(plus == true) numbers =  numbers + input;
+            else if(minus == true){ numbers = numbers - input; minus = false;}
+            else numbers = input;
+            
+            //Cosmetics
+            if(solved == false)cont = cont + Long.toString(input) + "+";
+            else{cont = cont + "+"; solved = false;}
+            
+            output.setText(cont);                       //Display
+            
+            plus = true; function = true; 
+            finished = false; test = true;              //Set booleans appropriately
+        }
+    }
+    
+    private class subBut implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            //Testing for previous add/minus
+            if(plus == true){ numbers =  numbers + input; plus = false;}
+            else if(minus == true) numbers = numbers - input;
+            else numbers = input;
+            
+            //Cosmetics
+            if(solved == false) cont = cont + Long.toString(input) + "-";
+            else{cont = cont + "-"; solved = false;}
+            
+            output.setText(cont);                       //Display
+            
+             minus = true; function = true; 
+             finished = false; test = true;             //Set booleans appropriately
+        }
+    }
+    
+    private class equalsBut implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            function = false; solved = true;    //Set booleans appropriately
+            
+            if(test == false){  //This avoids improper addition if desired 
+                                //number was not input
+                                //Solve for user
+                if(plus == true){ numbers =  numbers + input; plus = false;}
+                else if(minus == true){ numbers = numbers - input; minus = false;}
+                cont = Long.toString(numbers); input = numbers;
+                output.setText(cont);
+            }
+            else{               //Simply reverse mistake
+                cont = cont.substring(0, cont.length()-1);
+                output.setText(cont);
+                plus = false; minus = false;
+            }
+            test = false; finished = true;  //Adjust booleans as necessary
+        }
+    }
+    
+/*    private class delBut implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            //Test for what button was typed last
+            if(test == true){                       //If +/- was typed last
+                cont = cont.substring(0, cont.length()-1);
+                numbers = input;
+                plus = false; minus = false; solved = true; 
+                function = false; test = false;
+                
+                if(cont.equals("")){
+                    input = 0; numbers = 0;         //Avoid hidden values
+                    output.setText("0");            //Do not allow blank text field
+                }           
+                else output.setText(cont);
+            }
+            else{                                   //If number was typed last
+                if(finished == true){
+                    numbers = numbers/10;
+                    input = input/10;
+                    cont = cont.substring(0, cont.length()-1);
+                    cont = Long.toString(numbers);
+                    output.setText(cont);
+                    finished = false;
+                }
+                else{
+                    input = input/10;
+                    if(input == 0 && !cont.equals("")){
+                        cont = cont.substring(0, cont.length()-1);
+                        output.setText(cont);
+                    }
+                    else if(input != 0) output.setText(cont + input);
+                    else output.setText("0");
+                }
+            }
+        }
+    }
+*/
+    private class clearBut implements ActionListener{
+        public void actionPerformed(ActionEvent e){
+            function = false; solved = false; 
+            plus = false; minus = false;            //Adjust booleans
+            input = 0; numbers = 0; cont = "";      //Adjust other integers
+            output.setText("0");                    //Reset text field
+        }
+    }
+}
